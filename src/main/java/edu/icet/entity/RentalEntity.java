@@ -2,11 +2,15 @@ package edu.icet.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +26,10 @@ public class RentalEntity {
     private String dueDate;
     private Double fine;
     private Double totalcost;
+
+    @ManyToOne // Each rental is associated with one customer
+    private CustomerEntity customer;
+
+    @OneToMany(mappedBy = "rental")  // Establishing the one-to-many relationship with rental items
+    private List<RentalItemEntity> rentalItems;
 }
