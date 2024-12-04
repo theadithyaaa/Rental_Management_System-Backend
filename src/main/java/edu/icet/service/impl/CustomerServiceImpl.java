@@ -1,33 +1,54 @@
 package edu.icet.service.impl;
 
 import edu.icet.dto.Customer;
+import edu.icet.dto.Item;
+import edu.icet.entity.CustomerEntity;
+import edu.icet.entity.ItemEntity;
+import edu.icet.repository.CustomerRepository;
 import edu.icet.service.CustomerService;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
+
+    private final CustomerRepository repository;
+    private final ModelMapper mapper;
+
     @Override
     public List<Customer> getAll() {
-        return List.of();
-    }
+        List<Customer> customerArrayList = new ArrayList<>();
+        repository.findAll().forEach(entity->{
+            customerArrayList.add(mapper.map(entity, Customer.class));
+        });
+        return customerArrayList;    }
 
     @Override
     public void addCustomer(Customer customer) {
+        System.out.println(customer);
+        repository.save(mapper.map(customer, CustomerEntity.class));
 
     }
 
     @Override
     public void deleteCustomerById(Integer id) {
+        repository.deleteById(id);
 
     }
 
     @Override
     public Customer searchCustomerById(Integer id) {
-        return null;
+        return mapper.map(repository.findById(id), Customer.class);
     }
 
     @Override
     public void updateCustomerById(Customer customer) {
+        repository.save(mapper.map(customer, CustomerEntity.class));
 
     }
 }
