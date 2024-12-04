@@ -41,7 +41,7 @@ public class RentalController {
     public void deleteRentalById(@PathVariable Integer id){
         service.deleteRentaltyById(id);
     }
-    @PutMapping("/update-item")
+    @PutMapping("/update-rental")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateRental(@RequestBody Rental rental){
         service.updateRentalById(rental);
